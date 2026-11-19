@@ -1,0 +1,10 @@
+services:
+  observatoire-db:
+    image: docker.io/postgres:18
+    environment:
+      - POSTGRES_HOST_AUTH_METHOD=trust
+      - POSTGRES_DB=observatoire
+    ports:
+      - '5434:5432'
+    volumes:
+      - /var/lib/postgresql
