@@ -15,7 +15,9 @@
     "migration-bdd:annule": "tsx --env-file-if-exists=.env node_modules/knex/bin/cli.js migrate:rollback",
     "migration-bdd:nouvelle": "tsx --env-file-if-exists=.env node_modules/knex/bin/cli.js migrate:make -x ts",
     "verifie-types": "tsc --noEmit",
-    "formate": "prettier --write ."
+    "formate": "prettier --write .",
+    "lint": "eslint .",
+    "prepare": "husky"
   },
   "dependencies": {
     "knex": "^3.1.0",
@@ -23,8 +25,17 @@
     "tsx": "^4.21.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^26.6.6",
+    "eslint": "^10.14.0",
+    "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
+    "lint-staged": "^17.6.0",
     "prettier": "^3.8.1",
-    "typescript": "^6.0.0"
+    "typescript": "^6.0.0",
+    "typescript-eslint": "^8.72.2"
+  },
+  "lint-staged": {
+    "*.{js,ts}": "eslint --max-warnings=0"
   }
 }
