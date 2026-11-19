@@ -61,4 +61,12 @@ $ pnpm run migration-bdd:nouvelle ajouteTableMaTable
 
 Le déploiement se fait sur Clever Cloud via la GitHub Action [`deploiement.yml`](./.github/workflows/deploiement.yml),
 en DÉMO puis en PRODUCTION, à chaque push sur `main`.
-Les migrations sont jouées par le script [`scripts/clever-cloud/pre-run-clever.sh`](./scripts/clever-cloud/pre-run-clever.sh).
+Les applications Clever Cloud sont configurées en [mode tâche](https://www.clever.cloud/developers/doc/deploy/tasks/) :
+à chaque déploiement, Clever Cloud démarre une instance, exécute la commande définie dans `CC_RUN_COMMAND`
+(`pnpm run migration-bdd`), puis arrête l'instance.
+
+Pour rejouer les migrations sans redéployer :
+
+```sh
+$ clever restart --app <ID_APP>
+```
