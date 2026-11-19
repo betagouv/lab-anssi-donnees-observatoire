@@ -13,7 +13,7 @@ on:
 
 jobs:
   controle:
-    name: Prettier, TypeScript et migrations
+    name: Prettier, ESLint, TypeScript et migrations
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -53,6 +53,9 @@ jobs:
 
       - name: Vérifier le formatage
         run: pnpm exec prettier --check .
+
+      - name: Vérifier le lint
+        run: pnpm run lint
 
       - name: Vérifier les types
         run: pnpm run verifie-types
