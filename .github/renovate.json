@@ -1,0 +1,60 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "enabledManagers": ["docker-compose", "github-actions", "npm", "nvm"],
+  "dependencyDashboard": true,
+  "useBaseBranchConfig": "merge",
+  "commitMessagePrefix": "[RENOVATE]",
+  "schedule": ["* * * * 4"],
+  "timezone": "Europe/Paris",
+  "constraints": {
+    "node": "26.x"
+  },
+  "packageRules": [
+    {
+      "description": "@types/node ne doit pas dépasser la version majeure de Node définie dans .nvmrc (actuellement 26). À relever manuellement dès que .nvmrc est mis à jour vers une nouvelle version majeure.",
+      "matchPackageNames": ["@types/node"],
+      "allowedVersions": "<27.0.0"
+    },
+    {
+      "description": "typescript ne doit pas dépasser la v6 : typescript-eslint (peerDependencies typescript actuel : >=4.8.4 <6.1.0) ne supporte pas encore TS 7, ce qui fait échouer le lint en CI. À relever manuellement dès que typescript-eslint supporte TS 7.",
+      "matchPackageNames": ["typescript"],
+      "allowedVersions": "<7.0.0"
+    },
+    {
+      "description": "postgres ne doit pas dépasser la version majeure utilisée en production (actuellement 18, cf. docker-compose.yml). À relever manuellement lors d'une montée de version PostgreSQL planifiée.",
+      "matchPackageNames": ["docker.io/postgres"],
+      "matchDatasources": ["docker"],
+      "allowedVersions": "<19.0.0"
+    },
+    {
+      "description": "lockFileMaintenance",
+      "matchUpdateTypes": [
+        "pin",
+        "digest",
+        "patch",
+        "minor",
+        "major",
+        "lockFileMaintenance"
+      ],
+      "minimumReleaseAge": "7 days"
+    },
+    {
+      "description": "Regroupe les montées de version patch et mineures npm dans une seule PR",
+      "matchManagers": ["npm"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "npm - mises à jour patch et mineures"
+    },
+    {
+      "description": "Regroupe les montées de version patch et mineures des GitHub Actions dans une seule PR",
+      "matchManagers": ["github-actions"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "github-actions - mises à jour patch et mineures"
+    },
+    {
+      "description": "Regroupe les montées de version patch et mineures Docker (docker-compose) dans une seule PR",
+      "matchManagers": ["docker-compose"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "docker - mises à jour patch"
+    }
+  ]
+}
