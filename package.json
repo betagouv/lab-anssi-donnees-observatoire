@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/betagouv/lab-anssi-donnees-observatoire.git"
   },
-  "packageManager": "pnpm@12.19.0",
+  "packageManager": "pnpm@12.20.0",
   "scripts": {
     "migration-bdd": "tsx --env-file-if-exists=.env node_modules/knex/bin/cli.js migrate:latest",
     "migration-bdd:annule": "tsx --env-file-if-exists=.env node_modules/knex/bin/cli.js migrate:rollback",
