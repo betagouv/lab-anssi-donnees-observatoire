@@ -6,9 +6,9 @@ Ce dépôt Git contient les migrations de la base de données de l'observatoire 
 
 Chaque produit du Lab dispose de son propre schéma PostgreSQL :
 
-| Produit            | Schéma             |
-| ------------------ | ------------------ |
-| MonServiceSécurisé | `mss`              |
+| Produit            | Schéma |
+| ------------------ | ------ |
+| MonServiceSécurisé | `mss`  |
 
 Les migrations sont écrites en TypeScript avec [`knex.js`](https://knexjs.org/) et exécutées via [`tsx`](https://tsx.is/).
 Elles sont toutes dans le dossier [`migrations/`](./migrations) : chaque migration précise le schéma qu'elle concerne (`withSchema(...)`).

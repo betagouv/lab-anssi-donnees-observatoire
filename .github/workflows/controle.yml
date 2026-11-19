@@ -1,0 +1,64 @@
+name: Contrôle du code
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  controle:
+    name: Prettier, TypeScript et migrations
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    services:
+      postgres:
+        image: docker.io/postgres:18
+        env:
+          POSTGRES_HOST_AUTH_METHOD: trust
+          POSTGRES_DB: observatoire
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      URL_SERVEUR_BASE_DONNEES: postgres://postgres@localhost:5432/observatoire
+    steps:
+      - name: Cloner le dépôt Git
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Installer pnpm
+        shell: bash
+        run: npm install -g "$(jq -r '.packageManager' package.json)"
+
+      - name: Utiliser la version Node.js du projet
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Installer les dépendances
+        run: pnpm install
+
+      - name: Vérifier le formatage
+        run: pnpm exec prettier --check .
+
+      - name: Vérifier les types
+        run: pnpm run verifie-types
+
+      - name: Jouer les migrations
+        run: pnpm run migration-bdd
+
+      - name: Annuler toutes les migrations
+        run: pnpm exec tsx node_modules/knex/bin/cli.js migrate:rollback --all

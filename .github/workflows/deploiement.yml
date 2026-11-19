@@ -1,0 +1,34 @@
+name: Déploiement
+run-name: Déploiement du commit "${{ github.event.head_commit.message }}"
+permissions: {}
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # Pour activer le déclenchement manuel
+
+jobs:
+  deploiement-demo:
+    name: Déploiement
+    uses: ./.github/workflows/deploiement-clever-cloud.yml
+    with:
+      nom: Déploiement en DÉMO
+      environment: DEMO
+    secrets:
+      CLEVER_CLOUD_SECRET: ${{ secrets.CLEVER_CLOUD_SECRET }}
+      CLEVER_CLOUD_TOKEN: ${{ secrets.CLEVER_CLOUD_TOKEN }}
+      CLEVER_CLOUD_ID_APP: ${{ secrets.CLEVER_CLOUD_ID_APP }}
+      CLEVER_CLOUD_ID_ORGANISATION: ${{ secrets.CLEVER_CLOUD_ID_ORGANISATION }}
+
+  deploiement-prod:
+    needs: [deploiement-demo]
+    name: Déploiement
+    uses: ./.github/workflows/deploiement-clever-cloud.yml
+    with:
+      nom: Déploiement en PRODUCTION
+      environment: PROD
+    secrets:
+      CLEVER_CLOUD_SECRET: ${{ secrets.CLEVER_CLOUD_SECRET }}
+      CLEVER_CLOUD_TOKEN: ${{ secrets.CLEVER_CLOUD_TOKEN }}
+      CLEVER_CLOUD_ID_APP: ${{ secrets.CLEVER_CLOUD_ID_APP }}
+      CLEVER_CLOUD_ID_ORGANISATION: ${{ secrets.CLEVER_CLOUD_ID_ORGANISATION }}
