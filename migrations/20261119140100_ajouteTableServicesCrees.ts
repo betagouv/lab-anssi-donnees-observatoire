@@ -1,7 +1,7 @@
 import type { Knex } from 'knex';
-import { SCHEMAS } from '../schemas.js';
+import { SCHEMAS, TABLES } from '../schemas.js';
 
-const nomTable = 'services_crees';
+const nomTable = TABLES.MSS.SERVICES;
 
 export const up = (knex: Knex) =>
   knex.schema.withSchema(SCHEMAS.MSS).createTable(nomTable, (table) => {
