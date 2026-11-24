@@ -57,6 +57,14 @@ Créer une nouvelle migration :
 $ pnpm run migration-bdd:nouvelle ajouteTableMaTable
 ```
 
+## Scripts
+
+Vider toutes les données des tables du schéma `mss` (sans confirmation, sur la base pointée par `URL_SERVEUR_BASE_DONNEES`) :
+
+```sh
+$ pnpm run vide-donnees-mss
+```
+
 ## Déploiement
 
 Le déploiement se fait sur Clever Cloud via la GitHub Action [`deploiement.yml`](./.github/workflows/deploiement.yml),
