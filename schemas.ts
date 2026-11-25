@@ -1,4 +1,4 @@
-export const SCHEMAS = { MSS: 'mss' } as const;
+export const SCHEMAS = { MSS: 'mss', MSC: 'msc' } as const;
 
 export const TABLES = {
   MSS: {
