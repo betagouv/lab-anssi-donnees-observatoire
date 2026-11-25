@@ -15,6 +15,7 @@
     "migration-bdd:annule": "tsx --env-file-if-exists=.env node_modules/knex/bin/cli.js migrate:rollback",
     "migration-bdd:nouvelle": "tsx --env-file-if-exists=.env node_modules/knex/bin/cli.js migrate:make -x ts",
     "vide-donnees-mss": "tsx --env-file-if-exists=.env scripts/videDonneesMSS.ts",
+    "vide-donnees-msc": "tsx --env-file-if-exists=.env scripts/videDonneesMSC.ts",
     "verifie-types": "tsc --noEmit",
     "formate": "prettier --write .",
     "lint": "eslint .",
