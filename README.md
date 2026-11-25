@@ -66,6 +66,12 @@ Vider toutes les données des tables du schéma `mss` (sans confirmation, sur la
 $ pnpm run vide-donnees-mss
 ```
 
+Vider toutes les données des tables du schéma `msc` (sans confirmation, sur la base pointée par `URL_SERVEUR_BASE_DONNEES`) :
+
+```sh
+$ pnpm run vide-donnees-msc
+```
+
 ## Déploiement
 
 Le déploiement se fait sur Clever Cloud via la GitHub Action [`deploiement.yml`](./.github/workflows/deploiement.yml),
